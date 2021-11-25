@@ -174,7 +174,7 @@ class SetCriterion(nn.Module):
         losses = {}
         losses['loss_bbox'] = loss_bbox.sum() / num_boxes
 
-        loss_giou = 1 - torch.diag(generalized_box_iou(
+        loss_giou = torch.diag(generalized_box_iou(
             box_cxcywh_to_xyxy(src_boxes),
             box_cxcywh_to_xyxy(target_boxes)))
         losses['loss_giou'] = loss_giou.sum() / num_boxes
