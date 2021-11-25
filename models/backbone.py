@@ -10,6 +10,7 @@ import torchvision
 from torch import nn
 from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
+from import res2net50_v1b_26w_4s
 
 from util.misc import NestedTensor, is_main_process
 
