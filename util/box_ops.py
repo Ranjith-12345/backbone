@@ -33,8 +33,10 @@ def box_iou(boxes1, boxes2):
 
     union = area1[:, None] + area2 - inter
 
+    prec =0
     iou = inter / union
-    prec = iou/union
+    if iou >=0.5:
+        prec=1
     return iou, union, prec
 
 
