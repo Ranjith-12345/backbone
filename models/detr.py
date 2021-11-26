@@ -140,7 +140,7 @@ class SetCriterion(nn.Module):
         losses = {'cardinality_error': card_err}
         return losses
     
-    @torch.no_grad()
+    
     def accuracy(output, target, topk=(1,)):
         """Computes the precision@k for the specified values of k"""
         if target.numel() == 0:
