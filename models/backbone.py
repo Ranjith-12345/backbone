@@ -89,7 +89,7 @@ class Backbone(BackboneBase):
                  dilation: bool):
         backbone =res2net50_v1b_26w_4s(
             pretrained=is_main_process())
-        num_channels = 512
+        num_channels = 2048
         super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
 
 
