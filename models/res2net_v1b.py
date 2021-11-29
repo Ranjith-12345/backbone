@@ -188,8 +188,9 @@ def res2net50_v1b_26w_4s(pretrained=False, **kwargs):
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model.load_state_dict(model_zoo.load_url(model_urls['res2net50_v1b_26w_4s']))
+    
     model = Res2Net(Bottle2neck, [3, 4, 6, 3], baseWidth = 26, scale = 4, **kwargs)
+    model.load_state_dict(model_zoo.load_url(model_urls['res2net50_v1b_26w_4s']))
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['res2net50_v1b_26w_4s']))
     return model
