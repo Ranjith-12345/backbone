@@ -208,18 +208,6 @@ def res2net101_v1b_26w_4s(pretrained=False, **kwargs):
         model.load_state_dict(model_zoo.load_url(model_urls['res2net101_v1b_26w_4s']))
     return model
 
-'''def res2net152_v1b_26w_4s(pretrained=False, **kwargs):
-    """Constructs a Res2Net-50_v1b_26w_4s model.
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-    """
-    model.load_state_dict(torch.load("/gdrive/MyDrive/v3.pth"))
-    model = Res2Net(Bottle2neck, [3, 8, 36, 3], baseWidth = 26, scale = 4, **kwargs)
-    torch.save(model.state_dict(),'/gdrive/MyDrive/v3.pth')
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['res2net152_v1b_26w_4s']))
-        torch.save(model.state_dict(),'/gdrive/MyDrive/v3.pth')
-    return model'''
 
 def res2net152_v1b_26w_4s(pretrained=False, **kwargs):
     """Constructs a Res2Net-50_v1b_26w_4s model.
