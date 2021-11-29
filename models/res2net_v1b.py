@@ -190,13 +190,12 @@ def res2net50_v1b_26w_4s(pretrained=True, **kwargs):
     """
     
     
-    '''model = Res2Net(Bottle2neck, [3, 8, 36, 3], baseWidth = 26, scale = 4, **kwargs)
+    model = Res2Net(Bottle2neck, [3, 8, 36, 3], baseWidth = 26, scale = 4, **kwargs)
     torch.save(model.state_dict(),'/gdrive/MyDrive/v3.pth')
-    model.load_state_dict(torch.load("/gdrive/MyDrive/v3.pth"))'''
-    uhwdhwhdwuhdhuwdhuw
+    model.load_state_dict(torch.load("/gdrive/MyDrive/v3.pth"))
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['res2net50_v1b_26w_4s']))
-        #pretrained = False
+        pretrained = False
         torch.save(model.state_dict(),'/gdrive/MyDrive/v3.pth')
     return model
 
