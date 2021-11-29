@@ -196,7 +196,7 @@ def res2net50_v1b_26w_4s(pretrained=True, **kwargs):
     uhwdhwhdwuhdhuwdhuw
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['res2net50_v1b_26w_4s']))
-        pretrained = False
+        #pretrained = False
         torch.save(model.state_dict(),'/gdrive/MyDrive/v3.pth')
     return model
 
