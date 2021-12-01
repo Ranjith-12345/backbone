@@ -91,7 +91,7 @@ class Backbone(BackboneBase):
                  
         backbone = res2net50_v1b_26w_4s()
         num_channels = 512 if name in ('resnet18', 'resnet34') else 2048
-        super().__init__(backbone, train_backbone, num_channels)
+        super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
 
 
 class Joiner(nn.Sequential):
