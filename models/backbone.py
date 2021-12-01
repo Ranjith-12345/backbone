@@ -85,8 +85,8 @@ class Backbone(BackboneBase):
     """ResNet backbone with frozen BatchNorm."""
     def __init__(self, name: str,
                  train_backbone: bool,
-                 return_interm_layers: bool,
-                 dilation: bool):
+                 
+                 ):
         backbone = res2net50_v1b_26w_4s()
         num_channels = 512 if name in ('resnet18', 'resnet34') else 2048
         super().__init__(backbone, train_backbone, num_channels)
