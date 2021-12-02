@@ -219,7 +219,7 @@ def res2net101_v1b_26w_4s(pretrained=False, **kwargs):
     return model
 
 
-def res2net152_v1b_26w_4s(pretrained=False, **kwargs):
+def res2net152_v1b_26w_4s(pretrained= True, **kwargs):
     """Constructs a Res2Net-50_v1b_26w_4s model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
