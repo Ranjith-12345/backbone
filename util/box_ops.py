@@ -32,10 +32,10 @@ def box_iou(boxes1, boxes2):
     inter = wh[:, :, 0] * wh[:, :, 1]  # [N,M]
 
     union = area1[:, None] + area2 - inter
+
     iou = inter / union
-    prec = iou/union
-    
-    return iou, union, prec
+    return iou, union
+
 
 def generalized_box_iou(boxes1, boxes2):
     """
@@ -50,7 +50,7 @@ def generalized_box_iou(boxes1, boxes2):
     # so do an early check
     assert (boxes1[:, 2:] >= boxes1[:, :2]).all()
     assert (boxes2[:, 2:] >= boxes2[:, :2]).all()
-    iou, union,prec = box_iou(boxes1, boxes2)
+    iou, union = box_iou(boxes1, boxes2)
 
     lt = torch.min(boxes1[:, None, :2], boxes2[:, :2])
     rb = torch.max(boxes1[:, None, 2:], boxes2[:, 2:])
@@ -58,7 +58,7 @@ def generalized_box_iou(boxes1, boxes2):
     wh = (rb - lt).clamp(min=0)  # [N,M,2]
     area = wh[:, :, 0] * wh[:, :, 1]
 
-    return prec
+    return iou - (area - union) / area
 
 
 def masks_to_boxes(masks):
