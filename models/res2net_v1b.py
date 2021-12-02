@@ -197,7 +197,7 @@ def res2net101_v1b(pretrained=False, **kwargs):
         model.load_state_dict(model_zoo.load_url(model_urls['res2net50_v1b_26w_4s']))
     return model'''
 
-def res2net50_v1b_26w_4s(pretrained=False, **kwargs):
+def res2net50_v1b_26w_4s(pretrained=True, **kwargs):
     """Constructs a Res2Net-50_v1b_26w_4s model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
