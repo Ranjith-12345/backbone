@@ -233,6 +233,6 @@ def res2net152_v1b_26w_4s(pretrained= True, **kwargs):
 
 if __name__ == '__main__':
     images = torch.rand(1, 3, 224, 224).cuda(0)
-    model = res2net50_v1b_26w_4s(pretrained=True)
+    model = res2net152_v1b_26w_4s(pretrained=True)
     model = model.cuda(0)
     print(model(images).size())
