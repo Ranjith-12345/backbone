@@ -90,7 +90,7 @@ class Backbone(BackboneBase):
                  
                  
         backbone = res2net50()
-        num_channels = 512 if name in ('resnet18', 'resnet34') else 2048
+        num_channels =2048
         super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
 
 
