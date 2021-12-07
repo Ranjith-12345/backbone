@@ -10,7 +10,7 @@ import torchvision
 from torch import nn
 from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
-from .res2net import res2net50
+from .res2net import res2net50_v1b_26w_4s
 
 from util.misc import NestedTensor, is_main_process
 
@@ -89,7 +89,7 @@ class Backbone(BackboneBase):
                  dilation: bool):
                  
                  
-        backbone = res2net50()
+        backbone = res2net50_v1b_26w_4s()
         num_channels = 512 if name in ('resnet18', 'resnet34') else 2048
         super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
 
