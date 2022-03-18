@@ -3,7 +3,6 @@
 DETR model and criterion classes.
 """
 import torch
-from google.colab.patches import cv2_imshow
 import torch.nn.functional as F
 from torch import nn
 
@@ -58,7 +57,7 @@ class DETR(nn.Module):
                                 dictionnaries containing the two above keys for each decoder layer.
         """
         if isinstance(samples, (list, torch.Tensor)):
-            cv2_imshow(samples)
+            print(samples)
             samples = nested_tensor_from_tensor_list(samples)
         features, pos = self.backbone(samples)
 
