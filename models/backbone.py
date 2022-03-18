@@ -10,7 +10,6 @@ import torchvision
 from torch import nn
 from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
-from .res2net import res2net50
 
 from util.misc import NestedTensor, is_main_process
 
@@ -87,12 +86,11 @@ class Backbone(BackboneBase):
                  train_backbone: bool,
                  return_interm_layers: bool,
                  dilation: bool):
-                 
-                 
-        backbone = res2net50(
+        backbone = getattr(torchvision.models, name)(
             replace_stride_with_dilation=[False, False, dilation],
             pretrained=is_main_process(), norm_layer=FrozenBatchNorm2d)
         num_channels = 512 if name in ('resnet18', 'resnet34') else 2048
+        super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
 
 
 class Joiner(nn.Sequential):
