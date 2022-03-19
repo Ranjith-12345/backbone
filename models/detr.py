@@ -37,7 +37,7 @@ class DETR(nn.Module):
         self.class_embed = nn.Linear(hidden_dim, num_classes + 1)
         self.bbox_embed = MLP(hidden_dim, hidden_dim, 4, 3)
         self.query_embed = nn.Embedding(num_queries, hidden_dim)
-        self.input_proj = nn.Sequential(
+        self.localatt = nn.Sequential(
             nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
             nn.BatchNorm2d(backbone.num_channels),
             nn.ReLU(inplace=False),
@@ -74,6 +74,7 @@ class DETR(nn.Module):
         """
         if isinstance(samples, (list, torch.Tensor)):
             samples = nested_tensor_from_tensor_list(samples)
+            samples =self.localatt(samples)
         features, pos = self.backbone(samples)
 
         src, mask = features[-1].decompose()
