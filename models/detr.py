@@ -37,7 +37,7 @@ class DETR(nn.Module):
         self.class_embed = nn.Linear(hidden_dim, num_classes + 1)
         self.bbox_embed = MLP(hidden_dim, hidden_dim, 4, 3)
         self.query_embed = nn.Embedding(num_queries, hidden_dim)
-        self.localatt = nn.Sequential(
+        '''self.localatt = nn.Sequential(
             nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
             nn.BatchNorm2d(backbone.num_channels),
             nn.ReLU(inplace=False),
@@ -45,7 +45,7 @@ class DETR(nn.Module):
             nn.BatchNorm2d(backbone.num_channels),
         )
 
-        '''self.global_att = nn.Sequential(
+        self.global_att = nn.Sequential(
             nn.AdaptiveAvgPool2d(1),
             nn.Conv2d(channels, inter_channels, kernel_size=1, stride=1, padding=0),
             nn.BatchNorm2d(inter_channels),
@@ -53,7 +53,10 @@ class DETR(nn.Module):
             nn.Conv2d(inter_channels, channels, kernel_size=1, stride=1, padding=0),
             nn.BatchNorm2d(channels),
         )'''
-        self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
+        self.input_proj = nn.Sequential(
+          nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
+          nn.AdaptiveAvgPool2d(1)          
+        )      
         self.backbone = backbone
         self.aux_loss = aux_loss
 
@@ -74,8 +77,8 @@ class DETR(nn.Module):
         """
         if isinstance(samples, (list, torch.Tensor)):
             samples = nested_tensor_from_tensor_list(samples)
-        features2, pos = self.backbone(samples)
-        features = self.localatt(features2)
+        features, pos = self.backbone(samples)
+        #features = self.localatt(features2)
         src, mask = features[-1].decompose()
         
         assert mask is not None
