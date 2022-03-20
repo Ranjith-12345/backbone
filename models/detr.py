@@ -75,7 +75,7 @@ class DETR(nn.Module):
         if isinstance(samples, (list, torch.Tensor)):
             samples = nested_tensor_from_tensor_list(samples)
         features2, pos = self.backbone(samples)
-        features = self.localatt(features)
+        features = self.localatt(features2)
         src, mask = features[-1].decompose()
         
         assert mask is not None
