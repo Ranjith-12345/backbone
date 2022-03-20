@@ -55,8 +55,8 @@ class DETR(nn.Module):
         )'''
         self.input_proj = nn.Sequential(
           nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
-          nn.FrozenBatchNorm2d()
-          nn.Conv2d(512, 2048, kernel_size=1, stride=1, bias=False)
+          nn.FrozenBatchNorm2d(),
+          nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1)
         )      
         self.backbone = backbone
         self.aux_loss = aux_loss
