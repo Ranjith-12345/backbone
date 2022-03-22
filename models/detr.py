@@ -16,7 +16,7 @@ from .matcher import build_matcher
 from .segmentation import (DETRsegm, PostProcessPanoptic, PostProcessSegm,
                            dice_loss, sigmoid_focal_loss)
 from .transformer import build_transformer
-
+from .mixconv import MixConv2d
 
 class DETR(nn.Module):
     """ This is the DETR module that performs object detection """
@@ -53,14 +53,14 @@ class DETR(nn.Module):
             nn.Conv2d(inter_channels, channels, kernel_size=1, stride=1, padding=0),
             nn.BatchNorm2d(channels),
         )'''
-        self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
-        self.x = nn.Sequential(
+        self.input_proj = MixConv2d(backbone.num_channels, hidden_dim, kernel_size=1)
+       ''' self.x = nn.Sequential(
           nn.AdaptiveAvgPool2d(1),
           nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
           nn.BatchNorm2d(256),
           nn.ReLU(inplace=False),
           nn.Conv2d(256, 256, kernel_size=1),
-        )      
+        )'''      
         self.backbone = backbone
         self.aux_loss = aux_loss
 
@@ -79,10 +79,7 @@ class DETR(nn.Module):
                - "aux_outputs": Optional, only returned when auxilary losses are activated. It is a list of
                                 dictionnaries containing the two above keys for each decoder layer.
         """
-        if isinstance(samples, (list, torch.Tensor)):
-          
-            self.x = self.x(samples)
-            samples = self.x
+        if isinstance(samples, (list, torch.Tensor)):           
             samples = nested_tensor_from_tensor_list(samples)
             
             
