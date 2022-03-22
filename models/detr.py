@@ -81,9 +81,11 @@ class DETR(nn.Module):
         """
         if isinstance(samples, (list, torch.Tensor)):
           
-            samples = nested_tensor_from_tensor_list(samples)
             self.x = self.x(samples)
-            samples =self.x
+            samples = self.x
+            samples = nested_tensor_from_tensor_list(samples)
+            
+            
         features, pos = self.backbone(samples)
         #features = self.localatt(features2)
         src, mask = features[-1].decompose()
