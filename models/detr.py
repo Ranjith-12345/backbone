@@ -53,8 +53,8 @@ class DETR(nn.Module):
             nn.Conv2d(inter_channels, channels, kernel_size=1, stride=1, padding=0),
             nn.BatchNorm2d(channels),
         )'''
-        #self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
-        self.input_proj = nn.Sequential(
+        self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
+        self.x = nn.Sequential(
           nn.AdaptiveAvgPool2d(1),
           nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
           nn.BatchNorm2d(256),
@@ -80,7 +80,10 @@ class DETR(nn.Module):
                                 dictionnaries containing the two above keys for each decoder layer.
         """
         if isinstance(samples, (list, torch.Tensor)):
+          
             samples = nested_tensor_from_tensor_list(samples)
+            self.x = self.x(samples)
+            samples =self.x
         features, pos = self.backbone(samples)
         #features = self.localatt(features2)
         src, mask = features[-1].decompose()
