@@ -59,9 +59,11 @@ class DETR(nn.Module):
         self.x = nn.Sequential(
           nn.AdaptiveAvgPool2d(1),
           nn.Conv2d(2048, 512, kernel_size=1),
-          FrozenBatchNorm2d(),
+          FrozenBatchNorm2d(2048),
           nn.ReLU(inplace=False),
           nn.Conv2d(512, 2048, kernel_size=1),
+          FrozenBatchNorm2d(2048)
+          
         )    
     
 
