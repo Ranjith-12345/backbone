@@ -37,7 +37,7 @@ class DETR(nn.Module):
         self.class_embed = nn.Linear(hidden_dim, num_classes + 1)
         self.bbox_embed = MLP(hidden_dim, hidden_dim, 4, 3)
         self.query_embed = nn.Embedding(num_queries, hidden_dim)
-        self.input_proj = nn.Conv2D(backbone.num_channels, hidden_dim)
+        self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim)
         self.localatt = nn.Sequential(
               nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
               nn.BatchNorm2d(backbone.num_channels),
