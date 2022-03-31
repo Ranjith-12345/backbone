@@ -38,13 +38,13 @@ class DETR(nn.Module):
         self.bbox_embed = MLP(hidden_dim, hidden_dim, 4, 3)
         self.query_embed = nn.Embedding(num_queries, hidden_dim)
         self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim,kernel_size=1)
-        self.localatt = nn.Sequential(
-              nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
-              nn.BatchNorm2d(backbone.num_channels),
-              nn.ReLU(inplace=False),
-              nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
-              nn.BatchNorm2d(backbone.num_channels),
-          )
+#         self.localatt = nn.Sequential(
+#               nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
+#               nn.BatchNorm2d(backbone.num_channels),
+#               nn.ReLU(inplace=False),
+#               nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
+#               nn.BatchNorm2d(backbone.num_channels),
+#           )
 
 #        self.global_att = nn.Sequential(
 #             nn.AdaptiveAvgPool2d(1),
@@ -55,13 +55,13 @@ class DETR(nn.Module):
 #             nn.BatchNorm2d(channels),
 #         )
         
-#        self.x = nn.Sequential(
-#           nn.AdaptiveAvgPool2d(1),
-#           nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
-#           nn.BatchNorm2d(256),
-#           nn.ReLU(inplace=False),
-#           nn.Conv2d(256, 256, kernel_size=1),
-#         )     
+       self.x = nn.Sequential(
+          nn.AdaptiveAvgPool2d(1),
+          nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
+          nn.BatchNorm2d(256),
+          nn.ReLU(inplace=False),
+          nn.Conv2d(256, 256, kernel_size=1),
+        )     
         self.backbone = backbone
         self.aux_loss = aux_loss
 
@@ -90,7 +90,7 @@ class DETR(nn.Module):
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
         hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
-        hs = self.localatt(hs)
+        hs = self.x(hs)
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
         out = {'pred_logits': outputs_class[-1], 'pred_boxes': outputs_coord[-1]}
