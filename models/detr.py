@@ -55,7 +55,7 @@ class DETR(nn.Module):
 #             nn.BatchNorm2d(channels),
 #         )
         
-       self.x = nn.Sequential(
+        self.x = nn.Sequential(
           nn.AdaptiveAvgPool2d(1),
           nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1),
           nn.BatchNorm2d(256),
