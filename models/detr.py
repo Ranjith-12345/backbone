@@ -57,10 +57,10 @@ class DETR(nn.Module):
         
         self.x = nn.Sequential(
           nn.AdaptiveAvgPool2d(1),
-          nn.Conv2d(2048, 512, kernel_size=1),
+          nn.Conv2d(2048, 256, kernel_size=1),
           nn.BatchNorm2d(256),
           nn.ReLU(inplace=False),
-          nn.Conv2d(2048, 512, kernel_size=1),
+          nn.Conv2d(2048, 256, kernel_size=1),
         )     
         self.backbone = backbone
         self.aux_loss = aux_loss
