@@ -57,12 +57,11 @@ class DETR(nn.Module):
 #         )
         
         self.x = nn.Sequential(
-          nn.AdaptiveAvgPool2d(1),
-          nn.Conv2d(2048, 256, kernel_size=1),
-          FrozenBatchNorm2d(256),
+          nn.Conv2d(2048, 2048, kernel_size=1),
+          FrozenBatchNorm2d(2048),
           nn.ReLU(inplace=False),
-          nn.Conv2d(256, 16, kernel_size=1),
-          FrozenBatchNorm2d(16)
+          nn.Conv2d(2048, 2048, kernel_size=1),
+          FrozenBatchNorm2d(2048)
           
         )    
     
@@ -94,9 +93,9 @@ class DETR(nn.Module):
         src, mask = features[-1].decompose()
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
-        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])
+        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
         #print(hs)
-        hs = self.x(hs)[0]
+        hs = hs+ self.x(hs)
         print(hs.size())
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
