@@ -94,9 +94,9 @@ class DETR(nn.Module):
         src, mask = features[-1].decompose()
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
-        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
+        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])
         #print(hs)
-        hs = self.x(hs)
+        hs = self.x(hs)[0]
         print(hs.size())
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
