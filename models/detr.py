@@ -94,8 +94,7 @@ class DETR(nn.Module):
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
         ts = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])
-        xa = ts[0] + ts[1]
-        hs = self.x(xa)[0]
+        hs = self.x(ts)[0]
         #print(hs.size())
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
