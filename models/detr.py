@@ -62,7 +62,7 @@ class DETR(nn.Module):
           FrozenBatchNorm2d(2048),
           nn.ReLU(inplace=False),
           nn.Conv2d(512, 2048, kernel_size=1),
-          FrozenBatchNorm2d(2048)
+          FrozenBatchNorm2d(16)
           
         )    
     
