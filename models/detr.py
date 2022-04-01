@@ -57,11 +57,11 @@ class DETR(nn.Module):
 #         )
         
         self.x = nn.Sequential(
-          nn.Conv2d(2048, 2048, kernel_size=1),
-          FrozenBatchNorm2d(2048),
+          nn.Conv2d(2048, 512, kernel_size=1),
+          FrozenBatchNorm2d(512),
           nn.ReLU(inplace=False),
-          nn.Conv2d(2048, 2048, kernel_size=1),
-          FrozenBatchNorm2d(2048)
+          nn.Conv2d(512, 256, kernel_size=1),
+          FrozenBatchNorm2d(256)
           
         )    
     
@@ -94,8 +94,8 @@ class DETR(nn.Module):
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
         hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
-        #print(hs)
-        hs = hs+ self.x(hs)
+        sh = hs.size()
+        hs = torch.reshape(self.x(hs),sh)
         print(hs.size())
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
