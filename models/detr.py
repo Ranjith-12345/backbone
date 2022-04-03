@@ -56,14 +56,14 @@ class DETR(nn.Module):
 #             nn.BatchNorm2d(channels),
 #         )
         
-        self.x = nn.Sequential(
-          nn.Conv2d(2048, 512, kernel_size=1),
-          FrozenBatchNorm2d(512),
-          nn.ReLU(inplace=False),
-          nn.Conv2d(512, 256, kernel_size=1),
-          FrozenBatchNorm2d(256)
+#         self.x = nn.Sequential(
+#           nn.Conv2d(2048, 512, kernel_size=1),
+#           FrozenBatchNorm2d(512),
+#           nn.ReLU(inplace=False),
+#           nn.Conv2d(512, 256, kernel_size=1),
+#           FrozenBatchNorm2d(256)
           
-        )    
+#         )    
     
 
         self.backbone = backbone
@@ -93,9 +93,9 @@ class DETR(nn.Module):
         src, mask = features[-1].decompose()
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
-        ts = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])
-        hs = self.x(ts)[0]
-        #print(hs.size())
+        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])
+#         hs = self.x(ts)[0]
+#         #print(hs.size())
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
         out = {'pred_logits': outputs_class[-1], 'pred_boxes': outputs_coord[-1]}
