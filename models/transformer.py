@@ -37,14 +37,7 @@ class Transformer(nn.Module):
         self._reset_parameters()
 
         self.d_model = d_model
-        self.nhead = nhead
-        self.localatt = nn.Sequential(
-          nn.Conv2d(2048, 512, kernel_size=1),
-          FrozenBatchNorm2d(512),
-          nn.ReLU(inplace=False),
-          nn.Conv2d(512, 256, kernel_size=1),
-          FrozenBatchNorm2d(256)
-         )   
+        self.nhead = nhead  
 
     def _reset_parameters(self):
         for p in self.parameters():
@@ -63,7 +56,7 @@ class Transformer(nn.Module):
         memory = self.encoder(src, src_key_padding_mask=mask, pos=pos_embed)
         hs = self.decoder(tgt, memory, memory_key_padding_mask=mask,
                           pos=pos_embed, query_pos=query_embed)
-        hs = self.localatt(hs)
+        #hs = self.localatt(hs)
          
         return hs.transpose(1, 2), memory.permute(1, 2, 0).view(bs, c, h, w)
 
