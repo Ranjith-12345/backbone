@@ -42,8 +42,8 @@ class DETR(nn.Module):
             nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
             nn.BatchNorm2d(backbone.num_channels),
             nn.ReLU(inplace=False),
-            nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
-            nn.BatchNorm2d(backbone.num_channels),
+            nn.Conv2d(backbone.num_channels, 256, kernel_size=1),
+            nn.BatchNorm2d(256),
         )
         self.backbone = backbone
         self.aux_loss = aux_loss
