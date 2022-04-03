@@ -32,7 +32,7 @@ class FrozenBatchNorm2d(torch.nn.Module):
         self.register_buffer("running_mean", torch.zeros(n))
         self.register_buffer("running_var", torch.ones(n))
 
-    def _load_from_state_dict(self, state_dict, prefix, local_metadata, strict,
+    def _load_from_state_dict(self, state_dict, prefix, local_metadata, strict = False,
                               missing_keys, unexpected_keys, error_msgs):
         num_batches_tracked_key = prefix + 'num_batches_tracked'
         if num_batches_tracked_key in state_dict:
